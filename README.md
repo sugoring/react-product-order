@@ -14,33 +14,24 @@
 
 ### 1단계 - 상품 상세 페이지 & 상품 결제하기 폼 구현
 
-## 요구사항 정리
-
-- **UI 프레임워크:**
-  - [ ] `chakra-ui` 또는 직접 구현한 UI 컴포넌트만 사용 (외부 라이브러리 사용 금지)
-
-- **폼 상태 관리:**
-  - [ ] React 기본 기능 (`form`, `ref`, `state`)으로 폼 상태 관리 (외부 라이브러리 사용 금지)
+- **UI 프레임워크:** `chakra-ui` 또는 직접 구현한 UI 컴포넌트만 사용 (외부 라이브러리 사용 금지)
+- **폼 상태 관리:** React 기본 기능 (`form`, `ref`, `state`)으로 폼 상태 관리 (외부 라이브러리 사용 금지)
 
 - **상품 상세 페이지 (`/pages/ProductDetail`):**
   - [ ] `/components/features/Theme/ThemeGoodsSection` 또는 `/components/features/Home/GoodsRankingSection/List`에서 상품 ID를 받아 페이지 이동
   - [ ] 존재하지 않는 상품 ID일 경우 메인 페이지로 리다이렉트
 
-- **상품 정보 표시:**
-  - [ ] `/v1/products/{productId}/detail` API 호출
-  - [ ] API 응답 데이터를 활용하여 UI에 상품 정보 표시
-    - [ ] 기본 상품 정보 (`id`, `name`, `imageURL`)
-    - [ ] 가격 정보 (`basicPrice`, `discountRate`, `sellingPrice`)
-    - [ ] 브랜드 정보 (`id`, `name`, `imageURL`)
+  - **상품 정보 표시:**
+    - [ ] `/v1/products/{productId}/detail` API 호출
+      - [ ] 기본 상품 정보 (`id`, `name`, `imageURL`)
+      - [ ] 가격 정보 (`basicPrice`, `discountRate`, `sellingPrice`)
+      - [ ] 브랜드 정보 (`id`, `name`, `imageURL`)
 
-- **상품 옵션 선택:**
-  - [ ] `/v1/products/{productId}/options` API 호출
-  - [ ] API 응답 데이터 (`options` array)를 UI에 표시
-    - [ ] 옵션 목록 (`optionId`, `optionName`, `optionPrice`, `subOptions`)
-  - [ ] 사용자 옵션 선택 기능 구현
+  - **상품 옵션 선택:**
+    - [ ] `/v1/products/{productId}/options` API 호출
+      - [ ] 옵션 목록 (`optionId`, `optionName`, `optionPrice`, `subOptions`)
 
-- **"나에게 선물하기" 버튼:**
-  - [ ] 클릭 시 사용자 로그인 상태에 따라 동작
+  - **"나에게 선물하기" 버튼:**
     - [ ] 로그인 상태: 주문 결제 페이지로 이동
     - [ ] 비로그인 상태: 로그인 페이지로 이동
 

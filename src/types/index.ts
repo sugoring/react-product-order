@@ -13,28 +13,47 @@ export type RankingFilterOption = {
   rankType: 'MANY_WISH' | 'MANY_RECEIVE' | 'MANY_WISH_RECEIVE';
 };
 
+export type ProductOption = {
+  optionId: string;
+  optionName: string;
+  optionPrice: number;
+};
+
 export type GoodsData = {
-  id: number;
+  id: number; 
   name: string;
   imageURL: string;
-  wish: {
-    wishCount: number;
-    isWished: boolean;
-  };
   price: {
     basicPrice: number;
     discountRate: number;
     sellingPrice: number;
   };
   brandInfo: {
-    id: number;
+    id: number; 
     name: string;
     imageURL: string;
   };
 };
 
-export type ProductOption = {
-  id: number;
-  value: string;
-  stockQuantity: number;
+export type ProductDetailData = GoodsData & { 
+  isAccessableProductPage: boolean;
+  review: {
+    averageRating: number;
+    totalReviewCount: number;
+  };
+  productDescription: {
+    displayImage: string; 
+  };
+  productDetailInfo: {
+    announcements: {
+      displayOrder: number;
+      name: string;
+      value: string;
+    }[];
+    terms: {
+      displayCode: string;
+      title: string;
+      description: string;
+    }[];
+  };
 };
