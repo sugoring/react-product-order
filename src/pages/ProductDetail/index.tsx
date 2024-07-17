@@ -1,4 +1,4 @@
-import { Alert, AlertIcon, Box, Button, Spinner, Text } from '@chakra-ui/react';
+import { Alert, AlertIcon, Box, Button, Image, Text } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -32,7 +32,7 @@ const ProductDetailPage = () => {
   const productDetail = productDetailData?.detail;
   const productOptions = productOptionsData || [];
 
-  if (!productId) {
+  if (!productId || isDetailError) {
     navigate('/');
     return null;
   }
@@ -40,17 +40,11 @@ const ProductDetailPage = () => {
   if (isDetailLoading || isOptionsLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
-        <Spinner size="xl" />
+        <Image
+          src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"
+          alt="Loading"
+        />
       </Box>
-    );
-  }
-
-  if (isDetailError) {
-    return (
-      <Alert status="error" className="alert">
-        <AlertIcon />
-        상품 정보를 불러오는 데 실패했습니다. 다시 시도해주세요.
-      </Alert>
     );
   }
 
