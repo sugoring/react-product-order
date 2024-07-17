@@ -51,6 +51,10 @@ const PaymentPage = () => {
           현금영수증 / 소득공제 신청
         </Checkbox>
       </Box>
+      <Box mb={4} borderWidth={1} p={4} borderRadius="md">
+        <Text>최종 결제 금액</Text>
+        <Text>100,000원</Text>
+      </Box>
       <Button onClick={handlePayment}>결제하기</Button>
     </Box>
   );
