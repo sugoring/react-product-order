@@ -1,5 +1,5 @@
 import { Box, Button, Container, Image, Select, Spinner, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
 import { useGetProductDetail } from '@/api/hooks/useGetProductDetail';
