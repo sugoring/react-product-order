@@ -1,21 +1,16 @@
-import React from 'react';
+import { Box, Image, Text } from '@chakra-ui/react';
+
+import type { ProductDetailData } from '@/types';
 
 type ProductInfoProps = {
-  imageURL: string;
-  brand: string;
-  name: string;
-  price: number;
+  productDetail: ProductDetailData;
 };
 
-const ProductInfo: React.FC<ProductInfoProps> = ({ imageURL, brand, name, price }) => {
-  return (
-    <div>
-      <img src={imageURL} alt={name} />
-      <h1>{name}</h1>
-      <h2>{brand}</h2>
-      <p>{price.toLocaleString()}원</p>
-    </div>
-  );
-};
-
-export default ProductInfo;
+export const ProductInfo = ({ productDetail }: ProductInfoProps) => (
+  <Box>
+    <Image src={productDetail.imageURL} alt={productDetail.name} />
+    <Text>{productDetail.brandInfo.name}</Text>
+    <Text>{productDetail.name}</Text>
+    <Text>{productDetail.price.sellingPrice.toLocaleString()}원</Text>
+  </Box>
+);

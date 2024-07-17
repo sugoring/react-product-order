@@ -1,21 +1,22 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Button } from '@chakra-ui/react';
 
-const GiftButton: React.FC = () => {
-  const navigate = useNavigate();
+import { useAuth } from '@/provider/Auth';
+import { getDynamicPath } from '@/routes/path';
 
-  const handleClick = () => {
-    // 로그인 상태 확인 로직 추가 필요
-    const isLoggedIn = true; // 예시를 위한 임시 값
+type GiftButtonProps = {
+  handlePurchase: () => void;
+};
 
-    if (isLoggedIn) {
-      navigate('/order');
+export const GiftButton = ({ handlePurchase }: GiftButtonProps) => {
+  const authInfo = useAuth();
+
+  const onClick = () => {
+    if (!authInfo) {
+      window.location.replace(getDynamicPath.login());
     } else {
-      navigate('/login');
+      handlePurchase();
     }
   };
 
-  return <button onClick={handleClick}>나에게 선물하기</button>;
+  return <Button onClick={onClick}>나에게 선물하기</Button>;
 };
-
-export default GiftButton;

@@ -1,25 +1,19 @@
-import React, { useState } from 'react';
+import { Select } from '@chakra-ui/react';
+
+import type { ProductOption } from '@/types';
 
 type ProductOptionsProps = {
-  maxQuantity: number;
+  productOptions: ProductOption[];
+  quantity: number;
+  setQuantity: (quantity: number) => void;
 };
 
-const ProductOptions: React.FC<ProductOptionsProps> = ({ maxQuantity }) => {
-  const [quantity, setQuantity] = useState(1);
-
-  return (
-    <div>
-      <label htmlFor="quantity">수량</label>
-      <input
-        id="quantity"
-        type="number"
-        value={quantity}
-        onChange={(e) => setQuantity(Number(e.target.value))}
-        min={1}
-        max={maxQuantity}
-      />
-    </div>
-  );
-};
-
-export default ProductOptions;
+export const ProductOptions = ({ productOptions, quantity, setQuantity }: ProductOptionsProps) => (
+  <Select value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))}>
+    {productOptions.map((option, index) => (
+      <option key={index} value={option.quantity}>
+        {option.quantity}
+      </option>
+    ))}
+  </Select>
+);
