@@ -35,45 +35,6 @@ export type GoodsData = {
 
 export type ProductOption = {
   id: number;
-  quantity: number;
-};
-
-export type ProductDetailData = {
-  id: number;
-  name: string;
-  imageURL: string;
-  wish: {
-    wishCount: number;
-    isWished: boolean;
-  };
-  price: {
-    basicPrice: number;
-    discountRate: number;
-    sellingPrice: number;
-  };
-  brandInfo: {
-    id: number;
-    name: string;
-    imageURL: string;
-  };
-  isAccessableProductPage: boolean;
-  review: {
-    averageRating: number;
-    totalReviewCount: number;
-  };
-  productDescription: {
-    images: string[];
-  };
-  productDetailInfo: {
-    announcements: {
-      displayOrder: number;
-      name: string;
-      value: string;
-    }[];
-    terms: {
-      displayOrder: number;
-      title: string;
-      description: string;
-    }[];
-  };
+  value: string;
+  stockQuantity: number;
 };
