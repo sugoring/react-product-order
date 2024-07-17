@@ -1,37 +1,57 @@
-import React from 'react';
+import { Box, Button, Container, Image, Select, Spinner, Text } from '@chakra-ui/react';
+import React, { useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 
-import useGetProductDetail from '@/api/hooks/useGetProductDetail';
-import useGetProductOptions from '@/api/hooks/useGetProductOptions';
-import GiftButton from '@/components/features/ProductDetail/GiftButton';
-import GiftInfo from '@/components/features/ProductDetail/GiftInfo';
-import ProductInfo from '@/components/features/ProductDetail/ProductInfo';
-import ProductOptions from '@/components/features/ProductDetail/ProductOptions';
+import { useGetProductDetail } from '@/api/hooks/useGetProductDetail';
+import { useGetProductOptions } from '@/api/hooks/useGetProductOptions';
+import { useAuth } from '@/provider/Auth';
+import { getDynamicPath, RouterPath } from '@/routes/path';
+import type { ProductOption } from '@/types';
 
-const ProductDetailPage: React.FC = () => {
-  const { productId } = useParams<{ productId: string }>();
+export const ProductDetailPage = () => {
+  const { productId = '' } = useParams<{ productId: string }>();
   const {
-    product,
+    data: productDetail,
     isLoading: isLoadingDetail,
     isError: isErrorDetail,
-  } = useGetProductDetail(productId!);
+  } = useGetProductDetail(productId);
   const {
-    options,
+    data: productOptions,
     isLoading: isLoadingOptions,
     isError: isErrorOptions,
-  } = useGetProductOptions(productId!);
+  } = useGetProductOptions(productId);
+  const authInfo = useAuth();
+  const [quantity, setQuantity] = useState(1);
 
-  if (isLoadingDetail || isLoadingOptions) return <div>로딩 중...</div>;
-  if (isErrorDetail || isErrorOptions) return <Navigate to="/" />;
+  if (isLoadingDetail || isLoadingOptions) return <Spinner />;
+  if (isErrorDetail || isErrorOptions || !productDetail || !productOptions)
+    return <Navigate to={RouterPath.home} />;
+
+  const handlePurchase = () => {
+    if (!authInfo) {
+      return window.location.replace(getDynamicPath.login());
+    }
+
+    // Handle purchase logic here
+  };
 
   return (
-    <div>
-      {product && <ProductInfo {...product} />}
-      <GiftInfo />
-      {options && <ProductOptions maxQuantity={options.maxQuantity} />}
-      <GiftButton />
-    </div>
+    <Container>
+      <Box>
+        <Image src={productDetail.imageURL} alt={productDetail.name} />
+        <Text>{productDetail.brandInfo.name}</Text>
+        <Text>{productDetail.name}</Text>
+        <Text>{productDetail.price.sellingPrice.toLocaleString()}원</Text>
+        <Text>카톡 친구가 아니어도 선물 코드로 선물 할 수 있어요!</Text>
+        <Select value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value, 10))}>
+          {productOptions.map((option: ProductOption, index: number) => (
+            <option key={index} value={option.quantity}>
+              {option.quantity}
+            </option>
+          ))}
+        </Select>
+        <Button onClick={handlePurchase}>나에게 선물하기</Button>
+      </Box>
+    </Container>
   );
 };
-
-export default ProductDetailPage;
