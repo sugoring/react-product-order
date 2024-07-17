@@ -3,7 +3,6 @@ import {
   Button,
   Checkbox,
   Image,
-  Input,
   Radio,
   RadioGroup,
   Stack,
@@ -11,15 +10,42 @@ import {
   Textarea,
 } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+import { useGetProductDetail } from '@/api/hooks/useGetProductDetail';
 
 const PaymentPage = () => {
+  const { productId } = useParams<{ productId: string }>();
+  const { data: productDetailData, isLoading, isError } = useGetProductDetail(productId || '');
+
   const [message, setMessage] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('creditCard');
   const [receipt, setReceipt] = useState(false);
 
+  if (isLoading) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <Image
+          src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif"
+          alt="Loading"
+        />
+      </Box>
+    );
+  }
+
+  if (isError || !productDetailData?.detail) {
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <Text>상품 정보를 불러오는 데 실패했습니다.</Text>
+      </Box>
+    );
+  }
+
   const handlePayment = () => {
     alert('주문이 완료되었습니다');
   };
+
+  const productDetail = productDetailData.detail;
 
   return (
     <Box p={4}>
@@ -32,9 +58,9 @@ const PaymentPage = () => {
         />
       </Box>
       <Box mb={4} borderWidth={1} p={4} borderRadius="md">
-        <Image src="product_image_url" alt="상품 이미지" mb={4} />
-        <Text>브랜드: 예시 브랜드</Text>
-        <Text>상품명: 예시 상품</Text>
+        <Image src={productDetail.imageURL} alt="상품 이미지" mb={4} />
+        <Text>브랜드: {productDetail.brandInfo.name}</Text>
+        <Text>상품명: {productDetail.name}</Text>
         <Text>수량: 1</Text>
       </Box>
       <Box mb={4}>
@@ -53,7 +79,7 @@ const PaymentPage = () => {
       </Box>
       <Box mb={4} borderWidth={1} p={4} borderRadius="md">
         <Text>최종 결제 금액</Text>
-        <Text>100,000원</Text>
+        <Text>{productDetail.price.sellingPrice.toLocaleString()}원</Text>
       </Box>
       <Button onClick={handlePayment}>결제하기</Button>
     </Box>

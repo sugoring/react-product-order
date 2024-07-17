@@ -17,33 +17,34 @@
 - **UI 프레임워크:** `chakra-ui` 또는 직접 구현한 UI 컴포넌트만 사용 (외부 라이브러리 사용 금지)
 - **폼 상태 관리:** React 기본 기능 (`form`, `ref`, `state`)으로 폼 상태 관리 (외부 라이브러리 사용 금지)
 
-- **상품 상세 페이지 (`/pages/ProductDetail`):**
-  - [x] `/components/features/Theme/ThemeGoodsSection` 또는 `/components/features/Home/GoodsRankingSection/List`에서 상품 ID를 받아 페이지 이동
-  - [x] 존재하지 않는 상품 ID일 경우 메인 페이지로 리다이렉트
+- **상품 상세 페이지 (`@/pages/ProductDetail`):**
+  - [x] `/components/features/Theme/ThemeGoodsSection` 또는 `/components/features/Home/GoodsRankingSection/List`에서 상품 ID (productId)를 전달받아 페이지 이동
+  - [x] 유효하지 않은 productId일 경우 메인 페이지 (/)로 리다이렉트
 
   - **상품 정보 표시:**
-    - [x] `/v1/products/{productId}/detail` API 호출
-      - [x] 기본 상품 정보 (`id`, `name`, `imageURL`, `브랜드 정보`)
-      - [x] 가격 정보 (`basicPrice`)
+    - [x] `/v1/products/{productId}/detail` API 호출하여 데이터 불러오기
+      - [x] 상품 ID (id)
+      - [x] 상품명 (name)
+      - [x] 이미지 URL (imageURL)
+      - [x] 브랜드 정보 (brand)
+      - [x] 기본 가격 (basicPrice)
 
   - **상품 옵션 선택:**
-    - [ ] `/v1/products/{productId}/options` API 호출
+    - [ ] `/v1/products/{productId}/options` API 호출하여 데이터 불러오기
       - [ ] 옵션 목록 (`optionId`, `optionName`, `optionPrice`, `subOptions`)
 
   - **"나에게 선물하기" 버튼:**
-    - [x] 로그인 상태: 주문 결제 페이지로 이동
-    - [x] 비로그인 상태: 로그인 페이지로 이동
+    - [x] 로그인 상태: 주문 결제 페이지 (`@/pages/Payment`)로 이동하며, productId 전달
+    - [x] 비로그인 상태: 로그인 페이지 (`@/pages/Login`)로 이동
 
+**상품 결제 페이지(`@/pages/Payment`)**
 
-**상품 결제 페이지:**
-
-  1. **UI 컴포넌트 설계**
-     - [ ] "선물과 함께 보낼 메세지" 입력란
-     - [ ] 주문 상품 정보 표시 (이미지, 브랜드, 이름, 수량)
-     - [ ] 결제 수단 선택 UI (신용카드, 계좌이체 등)
-     - [ ] 결제 정보 입력 (현금영수증, 소득공제 등)
-     - [ ] 최종 결제 금액 표시
-     - [ ] "결제하기" 버튼 (클릭 시 "주문이 완료되었습니다" 알림)
+  - [ ] "선물과 함께 보낼 메세지" 입력란
+  - [ ] `/v1/products/{productId}/detail` API 호출하여 주문 상품 정보 표시 (이미지, 브랜드, 이름)
+  - [ ] 결제 수단 선택 UI (신용카드, 계좌이체 등)
+  - [ ] 결제 정보 입력 (현금영수증, 소득공제 등)
+  - [ ] 최종 결제 금액 표시
+  - [ ] "결제하기" 버튼 (클릭 시 "주문이 완료되었습니다" 알림)
 
 ---
 

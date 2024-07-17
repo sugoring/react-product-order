@@ -12,6 +12,7 @@ import ProductInfo from '@/components/features/ProductDetail/ProductInfo';
 import ProductOptions from '@/components/features/ProductDetail/ProductOptions';
 import ProductTerms from '@/components/features/ProductDetail/ProductTerms';
 import { useAuth } from '@/provider/Auth';
+import { getDynamicPath } from '@/routes/path';
 
 const ProductDetailPage = () => {
   const { productId } = useParams();
@@ -62,7 +63,11 @@ const ProductDetailPage = () => {
   }
 
   const handleGiftClick = () => {
-    navigate(auth ? '/order' : '/login');
+    if (auth) {
+      navigate(getDynamicPath.payment(productId));
+    } else {
+      navigate(getDynamicPath.login());
+    }
   };
 
   return (
