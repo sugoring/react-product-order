@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Checkbox,
   Image,
   Input,
   Radio,
@@ -14,6 +15,7 @@ import { useState } from 'react';
 const PaymentPage = () => {
   const [message, setMessage] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('creditCard');
+  const [receipt, setReceipt] = useState(false);
 
   const handlePayment = () => {
     alert('주문이 완료되었습니다');
@@ -43,6 +45,11 @@ const PaymentPage = () => {
             <Radio value="bankTransfer">계좌이체</Radio>
           </Stack>
         </RadioGroup>
+      </Box>
+      <Box mb={4}>
+        <Checkbox isChecked={receipt} onChange={(e) => setReceipt(e.target.checked)}>
+          현금영수증 / 소득공제 신청
+        </Checkbox>
       </Box>
       <Button onClick={handlePayment}>결제하기</Button>
     </Box>
