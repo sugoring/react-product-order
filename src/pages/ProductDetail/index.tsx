@@ -1,25 +1,34 @@
 import React from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 
+import useGetProductDetail from '@/api/hooks/useGetProductDetail';
+import useGetProductOptions from '@/api/hooks/useGetProductOptions';
 import GiftButton from '@/components/features/ProductDetail/GiftButton';
 import GiftInfo from '@/components/features/ProductDetail/GiftInfo';
 import ProductInfo from '@/components/features/ProductDetail/ProductInfo';
 import ProductOptions from '@/components/features/ProductDetail/ProductOptions';
 
 const ProductDetailPage: React.FC = () => {
-  const productId = 123; // 예시를 위한 임시 값
-  const productData = {
-    imageURL: 'https://example.com/image.jpg',
-    brand: 'Example Brand',
-    name: 'Example Product',
-    price: 10000,
-    maxQuantity: 10,
-  };
+  const { productId } = useParams<{ productId: string }>();
+  const {
+    product,
+    isLoading: isLoadingDetail,
+    isError: isErrorDetail,
+  } = useGetProductDetail(productId!);
+  const {
+    options,
+    isLoading: isLoadingOptions,
+    isError: isErrorOptions,
+  } = useGetProductOptions(productId!);
+
+  if (isLoadingDetail || isLoadingOptions) return <div>로딩 중...</div>;
+  if (isErrorDetail || isErrorOptions) return <Navigate to="/" />;
 
   return (
     <div>
-      <ProductInfo {...productData} />
+      {product && <ProductInfo {...product} />}
       <GiftInfo />
-      <ProductOptions maxQuantity={productData.maxQuantity} />
+      {options && <ProductOptions maxQuantity={options.maxQuantity} />}
       <GiftButton />
     </div>
   );
