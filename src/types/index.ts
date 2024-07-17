@@ -33,12 +33,11 @@ export type ProductOptionData = {
   }[];
 };
 
-export type ProductOption = {
-  id: number; 
+export interface ProductOption {
+  id: number;
   name: string;
   price: number;
-};
-
+}
 export type GoodsData = {
   id: number;
   name: string;
