@@ -1,66 +1,17 @@
-import { Alert, AlertIcon, Box, Button, Spinner, Text, VStack } from '@chakra-ui/react';
+import { Alert, AlertIcon, Box, Button, Spinner, Text } from '@chakra-ui/react';
 import { css } from '@emotion/react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { useGetProductDetail } from '@/api/hooks/useGetProductDetail';
 import { useGetProductOptions } from '@/api/hooks/useGetProductOptions';
+import { Container } from '@/components/common/layouts/Container';
+import { Grid } from '@/components/common/layouts/Grid';
 import ProductDescription from '@/components/features/ProductDetail/ProductDescription';
 import ProductImage from '@/components/features/ProductDetail/ProductImage';
 import ProductInfo from '@/components/features/ProductDetail/ProductInfo';
 import ProductOptions from '@/components/features/ProductDetail/ProductOptions';
 import ProductTerms from '@/components/features/ProductDetail/ProductTerms';
 import { useAuth } from '@/provider/Auth';
-
-const productDetailPageStyles = css`
-  .spinner {
-    margin: 20px auto;
-  }
-
-  .alert {
-    margin: 20px auto;
-    width: 100%;
-    text-align: center;
-  }
-
-  .gift-button {
-    width: 100%;
-    padding: 12px;
-    font-size: 1.2rem;
-    background: #000;
-    color: white;
-    border-radius: 8px;
-    &:hover {
-      background: #333;
-    }
-  }
-
-  .product-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    gap: 32px;
-  }
-
-  .product-info {
-    flex: 1;
-    max-width: 500px;
-  }
-
-  .product-image {
-    max-width: 50%;
-  }
-
-  .price-box {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    margin-top: 16px;
-    padding: 12px 0;
-    border-top: 1px solid #e2e2e2;
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-`;
 
 const ProductDetailPage = () => {
   const { productId } = useParams();
@@ -87,7 +38,11 @@ const ProductDetailPage = () => {
   }
 
   if (isDetailLoading || isOptionsLoading) {
-    return <Spinner className="spinner" />;
+    return (
+      <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
+        <Spinner size="xl" />
+      </Box>
+    );
   }
 
   if (isDetailError) {
@@ -117,27 +72,74 @@ const ProductDetailPage = () => {
   };
 
   return (
-    <VStack spacing={4} p={4} alignItems="flex-start" css={productDetailPageStyles}>
-      <Box className="product-container">
-        <Box className="product-image">
-          <ProductImage imageURL={productDetail.imageURL} name={productDetail.name} />
-        </Box>
-        <Box className="product-info">
-          <ProductInfo productDetail={productDetail} />
-          <ProductOptions productOptions={productOptions} isError={isOptionsError} />
-          <ProductDescription productDetail={productDetail} />
-          <ProductTerms productDetail={productDetail} />
-          <Box className="price-box">
-            <Text>총 결제 금액</Text>
-            <Text>{productDetail.price.sellingPrice.toLocaleString()}원</Text>
+    <Box css={pageStyles}>
+      <Container
+        maxWidth="1200px"
+        flexDirection="column"
+        justifyContent="flex-start"
+        alignItems="center"
+      >
+        <Grid columns={3} gap={32} style={{ width: '100%' }}>
+          <Box className="product-grid-item">
+            <ProductImage imageURL={productDetail.imageURL} name={productDetail.name} />
           </Box>
-          <Button className="gift-button" onClick={handleGiftClick}>
-            나에게 선물하기
-          </Button>
-        </Box>
-      </Box>
-    </VStack>
+          <Box className="product-grid-item">
+            <ProductInfo productDetail={productDetail} />
+            <ProductDescription productDetail={productDetail} />
+            <ProductTerms productDetail={productDetail} />
+          </Box>
+          <Box className="product-grid-item">
+            <ProductOptions productOptions={productOptions} isError={isOptionsError} />
+            <Box className="price-box">
+              <Text>총 결제 금액</Text>
+              <Text>{productDetail.price.sellingPrice.toLocaleString()}원</Text>
+            </Box>
+            <Button className="gift-button" onClick={handleGiftClick}>
+              나에게 선물하기
+            </Button>
+          </Box>
+        </Grid>
+      </Container>
+    </Box>
   );
 };
 
 export default ProductDetailPage;
+
+const pageStyles = css`
+  .alert {
+    background-color: #f9f9f9;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 0;
+  }
+
+  .product-grid-item {
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    background-color: #fff;
+  }
+
+  .price-box {
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    background-color: #f9f9f9;
+    margin-top: 16px;
+  }
+
+  .gift-button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    margin-top: 16px;
+    padding: 12px;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: #444;
+    }
+  }
+`;

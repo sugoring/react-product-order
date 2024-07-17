@@ -17,44 +17,6 @@ interface ProductInfoProps {
   productDetail: ProductDetail;
 }
 
-const productInfoStyles = css`
-  .product-name {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-  }
-
-  .price-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
-
-    .basic-price {
-      font-size: 1rem;
-      text-decoration: line-through;
-      color: #999;
-    }
-
-    .selling-price {
-      font-size: 1.5rem;
-      color: #333;
-      margin-left: 1rem;
-    }
-
-    .discount-rate {
-      font-size: 1rem;
-      color: #38a169;
-      margin-left: 1rem;
-    }
-  }
-
-  .brand-name {
-    font-size: 1rem;
-    color: #999;
-    margin-bottom: 1rem;
-  }
-`;
-
 const ProductInfo: React.FC<ProductInfoProps> = ({ productDetail }) => (
   <Box css={productInfoStyles}>
     <Text className="product-name">{productDetail.name}</Text>
@@ -72,3 +34,42 @@ const ProductInfo: React.FC<ProductInfoProps> = ({ productDetail }) => (
 );
 
 export default ProductInfo;
+
+const productInfoStyles = css`
+  .product-name {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+
+  .price-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+
+    .basic-price {
+      font-size: 1rem;
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    .selling-price {
+      font-size: 1.5rem;
+      color: #000;
+      margin-left: 1rem;
+    }
+
+    .discount-rate {
+      font-size: 1rem;
+      color: #999;
+      margin-left: 1rem;
+    }
+  }
+
+  .brand-name {
+    font-size: 1rem;
+    color: #999;
+    margin-bottom: 1rem;
+  }
+`;

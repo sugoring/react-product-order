@@ -28,54 +28,6 @@ interface ProductDescriptionProps {
   productDetail: ProductDetail;
 }
 
-const accordionStyles = css`
-  .accordion-button {
-    padding: 16px;
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);
-    color: white;
-    &:hover {
-      background: linear-gradient(135deg, #feb47b, #ff7e5f);
-    }
-  }
-
-  .accordion-panel {
-    padding: 16px;
-    background-color: #f9f9f9;
-    border: 1px solid #e2e2e2;
-    border-radius: 8px;
-  }
-
-  .box-title {
-    flex: 1;
-    text-align: left;
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-
-  .announcement-box {
-    margin-bottom: 8px;
-  }
-
-  .announcement-title {
-    font-weight: bold;
-    color: #333;
-  }
-
-  .announcement-value {
-    color: #666;
-  }
-
-  .product-description {
-    div {
-      img {
-        max-width: 100%;
-        height: auto;
-        border-radius: 8px;
-      }
-    }
-  }
-`;
-
 const ProductDescription: React.FC<ProductDescriptionProps> = ({ productDetail }) => (
   <Accordion allowToggle css={accordionStyles}>
     <AccordionItem>
@@ -105,3 +57,54 @@ const ProductDescription: React.FC<ProductDescriptionProps> = ({ productDetail }
 );
 
 export default ProductDescription;
+
+const accordionStyles = css`
+  .accordion-button {
+    padding: 10px;
+    background: #333;
+    color: #fff;
+    border: none;
+    &:hover {
+      background: #444;
+    }
+  }
+
+  .accordion-panel {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    margin-top: 4px;
+  }
+
+  .box-title {
+    flex: 1;
+    text-align: left;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .announcement-box {
+    margin-bottom: 10px;
+  }
+
+  .announcement-title {
+    font-weight: bold;
+    color: #333;
+  }
+
+  .announcement-value {
+    color: #666;
+  }
+
+  .product-description {
+    div {
+      img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 0;
+        filter: grayscale(100%);
+      }
+    }
+  }
+`;

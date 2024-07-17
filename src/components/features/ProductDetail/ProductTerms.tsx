@@ -25,43 +25,11 @@ interface ProductTermsProps {
   productDetail: ProductDetail;
 }
 
-const accordionStyles = css`
-  .accordion-button {
-    padding: 16px;
-    background: linear-gradient(135deg, #ff7e5f, #feb47b);
-    color: white;
-    &:hover {
-      background: linear-gradient(135deg, #feb47b, #ff7e5f);
-    }
-  }
-
-  .accordion-panel {
-    padding: 16px;
-    background-color: #f9f9f9;
-    border: 1px solid #e2e2e2;
-    border-radius: 8px;
-  }
-
-  .term-box {
-    margin-bottom: 12px;
-  }
-
-  .term-title {
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 4px;
-  }
-
-  .term-description {
-    color: #666;
-  }
-`;
-
 const ProductTerms: React.FC<ProductTermsProps> = ({ productDetail }) => (
   <Accordion allowToggle css={accordionStyles}>
     <AccordionItem>
       <AccordionButton className="accordion-button">
-        <Box flex="1" textAlign="left" fontSize="lg" fontWeight="bold">
+        <Box flex="1" textAlign="left" fontSize="md" fontWeight="bold">
           약관
         </Box>
         <AccordionIcon />
@@ -79,3 +47,36 @@ const ProductTerms: React.FC<ProductTermsProps> = ({ productDetail }) => (
 );
 
 export default ProductTerms;
+
+const accordionStyles = css`
+  .accordion-button {
+    padding: 10px;
+    background: #222;
+    color: #fff;
+    border: none;
+    border-bottom: 1px solid #444;
+    &:hover {
+      background: #333;
+    }
+  }
+
+  .accordion-panel {
+    padding: 15px;
+    background: #f9f9f9;
+    border-top: 1px solid #ddd;
+  }
+
+  .term-box {
+    margin-bottom: 10px;
+  }
+
+  .term-title {
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 5px;
+  }
+
+  .term-description {
+    color: #555;
+  }
+`;
