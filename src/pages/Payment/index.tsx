@@ -1,8 +1,19 @@
-import { Box, Button, Image, Input, Text, Textarea } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Image,
+  Input,
+  Radio,
+  RadioGroup,
+  Stack,
+  Text,
+  Textarea,
+} from '@chakra-ui/react';
 import { useState } from 'react';
 
 const PaymentPage = () => {
   const [message, setMessage] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState('creditCard');
 
   const handlePayment = () => {
     alert('주문이 완료되었습니다');
@@ -23,6 +34,15 @@ const PaymentPage = () => {
         <Text>브랜드: 예시 브랜드</Text>
         <Text>상품명: 예시 상품</Text>
         <Text>수량: 1</Text>
+      </Box>
+      <Box mb={4}>
+        <Text mb={2}>결제 수단 선택</Text>
+        <RadioGroup onChange={setPaymentMethod} value={paymentMethod}>
+          <Stack direction="row">
+            <Radio value="creditCard">신용카드</Radio>
+            <Radio value="bankTransfer">계좌이체</Radio>
+          </Stack>
+        </RadioGroup>
       </Box>
       <Button onClick={handlePayment}>결제하기</Button>
     </Box>
