@@ -5,17 +5,22 @@ import type { ProductOption, ProductOptionData } from '@/types';
 
 import { fetchInstance } from '../instance';
 
+const getProductOptionsPath = (productId: string) => `/v1/products/${productId}/options`;
+
+export const getProductOptions = async (productId: string): Promise<ProductOption[]> => {
+  const { data } = await fetchInstance.get<ProductOptionData>(getProductOptionsPath(productId));
+  return data.options.map((option) => ({
+    id: option.id,
+    name: option.value,
+    price: option.price,
+  }));
+};
+
 export const useGetProductOptions = (productId: string) => {
   return useQuery<ProductOption[], AxiosError>({
     queryKey: ['productOptions', productId],
-    queryFn: async () => {
-      const { data } = await fetchInstance.get<ProductOptionData>(`/v1/products/${productId}/options`);
-      // 옵션 데이터 변환 (ProductOptionData -> ProductOption[])
-      return data.options.map(option => ({
-        id: option.id,
-        name: option.value, // value를 name으로 사용
-        price: option.price
-      }));
-    }
+    queryFn: () => getProductOptions(productId),
+    // 오류 처리 로직 추가 (필요에 따라)
+    // enabled: !!productId, // productId가 있을 때만 쿼리 실행
   });
 };
