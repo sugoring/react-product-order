@@ -8,8 +8,8 @@ export const useGetProductDetail = (productId: string) => {
   return useQuery({
     queryKey: ['productDetail', productId],
     queryFn: async () => {
-      const { data } = await fetchInstance.get<ProductDetailData>(`/api/v1/products/${productId}/detail`);
+      const { data } = await fetchInstance.get<ProductDetailData>(`/v1/products/${productId}/detail`);
       return data;
-    }
+    },
   });
 };

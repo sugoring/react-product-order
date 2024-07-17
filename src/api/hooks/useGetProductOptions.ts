@@ -8,8 +8,8 @@ export const useGetProductOptions = (productId: string) => {
   return useQuery({
     queryKey: ['productOptions', productId],
     queryFn: async () => {
-      const { data } = await fetchInstance.get<ProductOption[]>(`/api/v1/products/${productId}/options`);
+      const { data } = await fetchInstance.get<ProductOption[]>(`/v1/products/${productId}/options`);
       return data;
-    }
+    },
   });
 };

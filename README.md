@@ -29,8 +29,8 @@
 
   2. **API 연동**
      - 상품 정보 및 옵션 데이터 불러오기
-       - [ ] /api/v1/products/{productId}/detail
-       - [ ] /api/v1/products/{productId}/options
+       - [ ] /v1/products/{productId}/detail
+       - [ ] /v1/products/{productId}/options
      - [ ] API 응답 데이터를 활용하여 UI에 정보 표시
 
   3. **페이지 이동 처리**
