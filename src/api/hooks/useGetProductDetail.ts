@@ -10,11 +10,7 @@ export const useGetProductDetail = (productId: string) => {
     queryKey: ['productDetail', productId],
     queryFn: async () => {
       const { data } = await fetchInstance.get<ProductDetailData>(`/v1/products/${productId}/detail`);
-
       return data;
-    },
-    onError: (error: AxiosError) => {
-      console.error('상품 상세 정보를 불러오는 중 오류가 발생했습니다:', error.message);
-    },
+    }
   });
 };
