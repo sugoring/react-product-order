@@ -101,27 +101,21 @@ const PaymentPage = () => {
           </Text>
           <Checkbox {...register('receipt')} mb={2}>
             현금영수증 신청
-          </Checkbox>
-          {receipt && (
-            <Box mb={4}>
-              <Select {...register('receiptType')} mb={2}>
-                <option value="personal">개인소득공제</option>
-                <option value="business">사업자지출증빙</option>
-              </Select>
-              <UnderlineTextField
-                {...register('receiptNumber', {
-                  required: receipt,
-                  pattern: { value: /^\d*$/, message: '현금영수증 번호는 숫자만 입력 가능합니다.' },
-                })}
-                placeholder="(-없이) 숫자만 입력하세요."
-              />
-              {errors.receiptNumber && (
-                <Text color="red.500" mt={2}>
-                  {errors.receiptNumber.message}
-                </Text>
-              )}
-            </Box>
-          )}
+            <Checkbox {...register('receipt')} mb={2}>현금영수증 신청</Checkbox>
+{receipt && (
+  <Box mb={4}>
+    <Select {...register('receiptType')} mb={2}>
+      <option value="personal">개인소득공제</option>
+      <option value="business">사업자지출증빙</option>
+    </Select>
+    <UnderlineTextField
+      {...register('receiptNumber', { required: receipt, pattern: { value: /^\d*$/, message: '현금영수증 번호는 숫자만 입력 가능합니다.' } })}
+      placeholder="(-없이) 숫자만 입력하세요."
+    />
+    {errors.receiptNumber && <Text color="red.500" mt={2}>{errors.receiptNumber.message}</Text>}
+  </Box>
+)}
+
           <Box mt={4} borderTop="1px solid #e2e8f0" pt={4}>
             <Text fontWeight="bold" fontSize="lg">
               최종 결제금액
