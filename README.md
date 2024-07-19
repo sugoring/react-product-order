@@ -61,7 +61,8 @@
 
 ### 3단계 - React Hook Form 리팩터링
 
-- 기존 폼을 React Hook Form으로 변경하고 유효성 검사 로직을 개선합니다. (zod 사용 가능)
+- [ ] 기존 폼을 React Hook Form으로 변경
+- [ ] 폼 필드와 유효성 검사를 관리
 
 ---
 
