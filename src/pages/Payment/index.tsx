@@ -1,19 +1,8 @@
-import {
-  Box,
-  Button,
-  Checkbox,
-  Image,
-  Radio,
-  RadioGroup,
-  Stack,
-  Text,
-  Textarea,
-} from '@chakra-ui/react';
+import { Box, Button, Checkbox, Image, Input, Select, Text, Textarea } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetProductDetail } from '@/api/hooks/useGetProductDetail';
-import { useGetProductOptions } from '@/api/hooks/useGetProductOptions';
 
 const PaymentPage = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -23,20 +12,15 @@ const PaymentPage = () => {
     isLoading: isDetailLoading,
     isError: isDetailError,
   } = useGetProductDetail(productId || '');
-  const {
-    data: productOptionsData,
-    isLoading: isOptionsLoading,
-    isError: isOptionsError,
-  } = useGetProductOptions(productId || '');
 
   const productDetail = productDetailData?.detail;
-  const productOptions = productOptionsData || [];
 
   const [message, setMessage] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState('creditCard');
   const [receipt, setReceipt] = useState(false);
+  const [receiptType, setReceiptType] = useState('personal');
+  const [receiptNumber, setReceiptNumber] = useState('');
 
-  if (isDetailLoading || isOptionsLoading) {
+  if (isDetailLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <Image
@@ -47,7 +31,7 @@ const PaymentPage = () => {
     );
   }
 
-  if (isDetailError || isOptionsError || !productDetail) {
+  if (isDetailError || !productDetail) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <Text>상품 정보를 불러오는 데 실패했습니다.</Text>
@@ -60,40 +44,80 @@ const PaymentPage = () => {
   };
 
   return (
-    <Box p={4}>
-      <Box mb={4}>
-        <label>선물과 함께 보낼 메세지</label>
-        <Textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="메세지를 입력하세요"
-        />
+    <Box display="flex" p={4} justifyContent="space-between" maxWidth="1200px" margin="0 auto">
+      <Box flex="1" mr={4}>
+        <Box mb={4}>
+          <Text fontWeight="bold" mb={2} fontSize="xl">
+            나에게 주는 선물
+          </Text>
+          <Textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            placeholder="선물과 함께 보낼 메세지를 적어보세요"
+            size="lg"
+            height="100px"
+            bg="#F7FAFC"
+            borderRadius="md"
+          />
+        </Box>
+        <Box mb={4} borderWidth={1} p={4} borderRadius="md" bg="#fff" boxShadow="sm">
+          <Text fontWeight="bold" mb={2} fontSize="lg">
+            선물내역
+          </Text>
+          <Box display="flex" alignItems="center">
+            <Image src={productDetail.imageURL} alt="상품 이미지" boxSize="100px" mr={4} />
+            <Box>
+              <Text fontWeight="bold">{productDetail.brandInfo.name}</Text>
+              <Text>{productDetail.name}</Text>
+              <Text>수량: 1</Text>
+            </Box>
+          </Box>
+        </Box>
       </Box>
-      <Box mb={4} borderWidth={1} p={4} borderRadius="md">
-        <Image src={productDetail.imageURL} alt="상품 이미지" mb={4} />
-        <Text>브랜드: {productDetail.brandInfo.name}</Text>
-        <Text>상품명: {productDetail.name}</Text>
-        <Text>수량: 1</Text>
+      <Box flex="1">
+        <Box mb={4} p={4} borderWidth={1} borderRadius="md" bg="#fff" boxShadow="sm">
+          <Text fontWeight="bold" mb={2} fontSize="lg">
+            결제 정보
+          </Text>
+          <Checkbox isChecked={receipt} onChange={(e) => setReceipt(e.target.checked)} mb={2}>
+            현금영수증 신청
+          </Checkbox>
+          {receipt && (
+            <Box>
+              <Select value={receiptType} onChange={(e) => setReceiptType(e.target.value)} mb={2}>
+                <option value="personal">개인소득공제</option>
+                <option value="business">사업자지출증빙</option>
+              </Select>
+              <Input
+                value={receiptNumber}
+                onChange={(e) => setReceiptNumber(e.target.value)}
+                placeholder="(-없이) 숫자만 입력하세요."
+                mb={2}
+              />
+            </Box>
+          )}
+          <Box mt={4}>
+            <Text fontWeight="bold" fontSize="lg">
+              최종 결제금액
+            </Text>
+            <Text fontSize="2xl" color="yellow.600" fontWeight="bold">
+              {productDetail.price.sellingPrice.toLocaleString()}원
+            </Text>
+          </Box>
+          <Button
+            mt={4}
+            colorScheme="yellow"
+            size="lg"
+            width="full"
+            onClick={handlePayment}
+            backgroundColor="yellow.500"
+            _hover={{ backgroundColor: 'yellow.600' }}
+            fontSize="lg"
+          >
+            {productDetail.price.sellingPrice.toLocaleString()}원 결제하기
+          </Button>
+        </Box>
       </Box>
-      <Box mb={4}>
-        <Text mb={2}>결제 수단 선택</Text>
-        <RadioGroup onChange={setPaymentMethod} value={paymentMethod}>
-          <Stack direction="row">
-            <Radio value="creditCard">신용카드</Radio>
-            <Radio value="bankTransfer">계좌이체</Radio>
-          </Stack>
-        </RadioGroup>
-      </Box>
-      <Box mb={4}>
-        <Checkbox isChecked={receipt} onChange={(e) => setReceipt(e.target.checked)}>
-          현금영수증 / 소득공제 신청
-        </Checkbox>
-      </Box>
-      <Box mb={4} borderWidth={1} p={4} borderRadius="md">
-        <Text>최종 결제 금액</Text>
-        <Text>{productDetail.price.sellingPrice.toLocaleString()}원</Text>
-      </Box>
-      <Button onClick={handlePayment}>결제하기</Button>
     </Box>
   );
 };
