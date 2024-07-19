@@ -6,6 +6,13 @@ import { useGetProductDetail } from '@/api/hooks/useGetProductDetail';
 import { Button } from '@/components/common/Button';
 import { UnderlineTextField } from '@/components/common/Form/Input/UnderlineTextField';
 
+type FormData = {
+  message: string;
+  receipt: boolean;
+  receiptType: string;
+  receiptNumber: string;
+};
+
 const PaymentPage = () => {
   const { productId } = useParams<{ productId: string }>();
 
@@ -20,12 +27,12 @@ const PaymentPage = () => {
     handleSubmit,
     formState: { errors },
     watch,
-  } = useForm();
+  } = useForm<FormData>();
   const receipt = watch('receipt');
 
   const productDetail = productDetailData?.detail;
 
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     alert('주문이 완료되었습니다');
   };
 
@@ -76,7 +83,7 @@ const PaymentPage = () => {
           />
           {errors.message && (
             <Text color="red.500" mt={2}>
-              {errors.message.message}
+              {String(errors.message.message)}
             </Text>
           )}
         </Box>
@@ -101,21 +108,27 @@ const PaymentPage = () => {
           </Text>
           <Checkbox {...register('receipt')} mb={2}>
             현금영수증 신청
-            <Checkbox {...register('receipt')} mb={2}>현금영수증 신청</Checkbox>
-{receipt && (
-  <Box mb={4}>
-    <Select {...register('receiptType')} mb={2}>
-      <option value="personal">개인소득공제</option>
-      <option value="business">사업자지출증빙</option>
-    </Select>
-    <UnderlineTextField
-      {...register('receiptNumber', { required: receipt, pattern: { value: /^\d*$/, message: '현금영수증 번호는 숫자만 입력 가능합니다.' } })}
-      placeholder="(-없이) 숫자만 입력하세요."
-    />
-    {errors.receiptNumber && <Text color="red.500" mt={2}>{errors.receiptNumber.message}</Text>}
-  </Box>
-)}
-
+          </Checkbox>
+          {receipt && (
+            <Box mb={4}>
+              <Select {...register('receiptType')} mb={2}>
+                <option value="personal">개인소득공제</option>
+                <option value="business">사업자지출증빙</option>
+              </Select>
+              <UnderlineTextField
+                {...register('receiptNumber', {
+                  required: receipt,
+                  pattern: { value: /^\d*$/, message: '현금영수증 번호는 숫자만 입력 가능합니다.' },
+                })}
+                placeholder="(-없이) 숫자만 입력하세요."
+              />
+              {errors.receiptNumber && (
+                <Text color="red.500" mt={2}>
+                  {String(errors.receiptNumber.message)}
+                </Text>
+              )}
+            </Box>
+          )}
           <Box mt={4} borderTop="1px solid #e2e8f0" pt={4}>
             <Text fontWeight="bold" fontSize="lg">
               최종 결제금액
@@ -124,7 +137,7 @@ const PaymentPage = () => {
               {productDetail.price.sellingPrice.toLocaleString()}원
             </Text>
           </Box>
-          <Button size="large" theme="kakao" type="submit" width="100%" mt={4}>
+          <Button size="large" theme="kakao" type="submit">
             {productDetail.price.sellingPrice.toLocaleString()}원 결제하기
           </Button>
         </Box>
