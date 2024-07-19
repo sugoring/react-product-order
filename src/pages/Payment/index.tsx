@@ -32,7 +32,7 @@ const PaymentPage = () => {
 
   const productDetail = productDetailData?.detail;
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = () => {
     alert('주문이 완료되었습니다');
   };
 
@@ -71,7 +71,10 @@ const PaymentPage = () => {
             나에게 주는 선물
           </Text>
           <Textarea
-            {...register('message', { required: '카드 메시지를 입력해주세요.' })}
+            {...register('message', {
+              required: '카드 메시지를 입력해주세요.',
+              maxLength: { value: 100, message: '카드 메시지는 100자를 초과할 수 없습니다.' },
+            })}
             placeholder="선물과 함께 보낼 메세지를 적어보세요"
             size="lg"
             height="100px"
@@ -113,9 +116,17 @@ const PaymentPage = () => {
                 <option value="business">사업자지출증빙</option>
               </Select>
               <UnderlineTextField
-                {...register('receiptNumber')}
+                {...register('receiptNumber', {
+                  required: receipt,
+                  pattern: { value: /^\d*$/, message: '현금영수증 번호는 숫자만 입력 가능합니다.' },
+                })}
                 placeholder="(-없이) 숫자만 입력하세요."
               />
+              {errors.receiptNumber && (
+                <Text color="red.500" mt={2}>
+                  {String(errors.receiptNumber.message)}
+                </Text>
+              )}
             </Box>
           )}
           <Box mt={4} borderTop="1px solid #e2e8f0" pt={4}>
@@ -126,7 +137,7 @@ const PaymentPage = () => {
               {productDetail.price.sellingPrice.toLocaleString()}원
             </Text>
           </Box>
-          <Button size="large" theme="kakao" type="submit" width="100%" mt={4}>
+          <Button size="large" theme="kakao" type="submit">
             {productDetail.price.sellingPrice.toLocaleString()}원 결제하기
           </Button>
         </Box>
