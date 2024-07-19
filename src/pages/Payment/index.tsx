@@ -63,6 +63,12 @@ const PaymentPage = () => {
     }
     setMessageError('');
 
+    if (receipt && !receiptNumber) {
+      setReceiptError('현금영수증 번호를 입력해주세요.');
+      return;
+    }
+    setReceiptError('');
+
     alert('주문이 완료되었습니다');
   };
 
