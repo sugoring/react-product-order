@@ -61,8 +61,8 @@
 
 ### 3단계 - React Hook Form 리팩터링
 
-- [ ] 기존 폼을 React Hook Form으로 변경
-- [ ] 폼 필드와 유효성 검사를 관리
+- [x] 기존 폼을 React Hook Form으로 변경
+- [x] 폼 필드와 유효성 검사를 관리
 
 ---
 
