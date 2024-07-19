@@ -21,6 +21,17 @@ const PaymentPage = () => {
   const [receipt, setReceipt] = useState(false);
   const [receiptType, setReceiptType] = useState('personal');
   const [receiptNumber, setReceiptNumber] = useState('');
+  const [messageError, setMessageError] = useState('');
+
+  const handlePayment = () => {
+    if (!message) {
+      setMessageError('카드 메시지를 입력해주세요.');
+      return;
+    }
+    setMessageError('');
+
+    alert('주문이 완료되었습니다');
+  };
 
   if (isDetailLoading) {
     return (
@@ -41,10 +52,6 @@ const PaymentPage = () => {
     );
   }
 
-  const handlePayment = () => {
-    alert('주문이 완료되었습니다');
-  };
-
   return (
     <Box display="flex" p={4} justifyContent="space-between" maxWidth="1200px" margin="0 auto">
       <Box flex="1" mr={4}>
@@ -61,6 +68,11 @@ const PaymentPage = () => {
             bg="#F7FAFC"
             borderRadius="md"
           />
+          {messageError && (
+            <Text color="red.500" mt={2}>
+              {messageError}
+            </Text>
+          )}
         </Box>
         <Box mb={4} borderWidth={1} p={4} borderRadius="md" bg="#fff" boxShadow="sm">
           <Text fontWeight="bold" mb={2} fontSize="lg">
@@ -106,7 +118,7 @@ const PaymentPage = () => {
               {productDetail.price.sellingPrice.toLocaleString()}원
             </Text>
           </Box>
-          <Button size="large" theme="kakao" onClick={handlePayment}>
+          <Button size="large" theme="kakao" onClick={handlePayment} width="100%" mt={4}>
             {productDetail.price.sellingPrice.toLocaleString()}원 결제하기
           </Button>
         </Box>
