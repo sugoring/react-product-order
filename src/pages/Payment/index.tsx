@@ -85,7 +85,7 @@ const PaymentPage = () => {
             현금영수증 신청
           </Checkbox>
           {receipt && (
-            <Box>
+            <Box mb={4}>
               <Select value={receiptType} onChange={(e) => setReceiptType(e.target.value)} mb={2}>
                 <option value="personal">개인소득공제</option>
                 <option value="business">사업자지출증빙</option>
@@ -98,7 +98,7 @@ const PaymentPage = () => {
               />
             </Box>
           )}
-          <Box mt={4}>
+          <Box mt={4} borderTop="1px solid #e2e8f0" pt={4}>
             <Text fontWeight="bold" fontSize="lg">
               최종 결제금액
             </Text>
