@@ -1,8 +1,9 @@
-import { Box, Button, Checkbox, Image, Input, Select, Text, Textarea } from '@chakra-ui/react';
+import { Box, Checkbox, Image, Input, Select, Text, Textarea } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetProductDetail } from '@/api/hooks/useGetProductDetail';
+import { Button } from '@/components/common/Button';
 
 const PaymentPage = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -104,16 +105,7 @@ const PaymentPage = () => {
               {productDetail.price.sellingPrice.toLocaleString()}원
             </Text>
           </Box>
-          <Button
-            mt={4}
-            colorScheme="yellow"
-            size="lg"
-            width="full"
-            onClick={handlePayment}
-            backgroundColor="yellow.500"
-            _hover={{ backgroundColor: 'yellow.600' }}
-            fontSize="lg"
-          >
+          <Button size="large" theme="kakao" onClick={handlePayment}>
             {productDetail.price.sellingPrice.toLocaleString()}원 결제하기
           </Button>
         </Box>
