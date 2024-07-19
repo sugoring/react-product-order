@@ -52,6 +52,20 @@ const PaymentPage = () => {
     );
   }
 
+  const handlePayment = () => {
+    if (!message) {
+      setMessageError('카드 메시지를 입력해주세요.');
+      return;
+    }
+    if (message.length > 100) {
+      setMessageError('카드 메시지는 100자를 초과할 수 없습니다.');
+      return;
+    }
+    setMessageError('');
+
+    alert('주문이 완료되었습니다');
+  };
+
   return (
     <Box display="flex" p={4} justifyContent="space-between" maxWidth="1200px" margin="0 auto">
       <Box flex="1" mr={4}>
