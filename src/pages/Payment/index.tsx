@@ -1,9 +1,10 @@
-import { Box, Checkbox, Image, Input, Select, Text, Textarea } from '@chakra-ui/react';
+import { Box, Checkbox, Image, Select, Text, Textarea } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetProductDetail } from '@/api/hooks/useGetProductDetail';
 import { Button } from '@/components/common/Button';
+import { UnderlineTextField } from '@/components/common/Form/Input/UnderlineTextField';
 
 const PaymentPage = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -89,11 +90,11 @@ const PaymentPage = () => {
                 <option value="personal">개인소득공제</option>
                 <option value="business">사업자지출증빙</option>
               </Select>
-              <Input
+              <UnderlineTextField
                 value={receiptNumber}
                 onChange={(e) => setReceiptNumber(e.target.value)}
                 placeholder="(-없이) 숫자만 입력하세요."
-                mb={2}
+                invalid={!/^\d*$/.test(receiptNumber)}
               />
             </Box>
           )}
