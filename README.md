@@ -20,7 +20,6 @@
 - **상품 상세 페이지 (`@/pages/ProductDetail`):**
   - [x] `/components/features/Theme/ThemeGoodsSection` 또는 `/components/features/Home/GoodsRankingSection/List`에서 상품 ID (productId)를 전달받아 페이지 이동
   - [x] 유효하지 않은 productId일 경우 메인 페이지 (/)로 리다이렉트
-
   - **상품 정보 표시:**
     - [x] `/v1/products/{productId}/detail` API 호출하여 데이터 불러오기
       - [x] 상품 ID (id)
@@ -28,23 +27,19 @@
       - [x] 이미지 URL (imageURL)
       - [x] 브랜드 정보 (brand)
       - [x] 기본 가격 (basicPrice)
-
   - **상품 옵션 선택:**
     - [ ] `/v1/products/{productId}/options` API 호출하여 데이터 불러오기
       - [ ] 옵션 목록 (`optionId`, `optionName`, `optionPrice`, `subOptions`)
-
   - **"나에게 선물하기" 버튼:**
     - [x] 로그인 상태: 주문 결제 페이지 (`@/pages/Payment`)로 이동하며, productId 전달
     - [x] 비로그인 상태: 로그인 페이지 (`@/pages/Login`)로 이동
 
-**상품 결제 페이지(`@/pages/Payment`)**
-
-  - [ ] "선물과 함께 보낼 메세지" 입력란
-  - [ ] `/v1/products/{productId}/detail` API 호출하여 주문 상품 정보 표시 (이미지, 브랜드, 이름)
-  - [ ] 결제 수단 선택 UI (신용카드, 계좌이체 등)
-  - [ ] 결제 정보 입력 (현금영수증, 소득공제 등)
-  - [ ] 최종 결제 금액 표시
-  - [ ] "결제하기" 버튼 (클릭 시 "주문이 완료되었습니다" 알림)
+- **상품 결제 페이지(`@/pages/Payment`):**
+  - [x] "선물과 함께 보낼 메세지" 입력란
+  - [x] `/v1/products/{productId}/detail` API 호출하여 주문 상품 정보 표시 (이미지, 브랜드, 이름)
+  - [x] 결제 정보 입력 (현금영수증, 소득공제 등)
+  - [x] 최종 결제 금액 표시
+  - [x] "결제하기" 버튼 (클릭 시 "주문이 완료되었습니다" 알림)
 
 ---
 
