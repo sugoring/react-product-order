@@ -13,16 +13,30 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useGetProductDetail } from '@/api/hooks/useGetProductDetail';
+import { useGetProductOptions } from '@/api/hooks/useGetProductOptions';
 
 const PaymentPage = () => {
   const { productId } = useParams<{ productId: string }>();
-  const { data: productDetailData, isLoading, isError } = useGetProductDetail(productId || '');
+
+  const {
+    data: productDetailData,
+    isLoading: isDetailLoading,
+    isError: isDetailError,
+  } = useGetProductDetail(productId || '');
+  const {
+    data: productOptionsData,
+    isLoading: isOptionsLoading,
+    isError: isOptionsError,
+  } = useGetProductOptions(productId || '');
+
+  const productDetail = productDetailData?.detail;
+  const productOptions = productOptionsData || [];
 
   const [message, setMessage] = useState('');
   const [paymentMethod, setPaymentMethod] = useState('creditCard');
   const [receipt, setReceipt] = useState(false);
 
-  if (isLoading) {
+  if (isDetailLoading || isOptionsLoading) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <Image
@@ -33,7 +47,7 @@ const PaymentPage = () => {
     );
   }
 
-  if (isError || !productDetailData?.detail) {
+  if (isDetailError || isOptionsError || !productDetail) {
     return (
       <Box display="flex" justifyContent="center" alignItems="center" height="100vh">
         <Text>상품 정보를 불러오는 데 실패했습니다.</Text>
@@ -44,8 +58,6 @@ const PaymentPage = () => {
   const handlePayment = () => {
     alert('주문이 완료되었습니다');
   };
-
-  const productDetail = productDetailData.detail;
 
   return (
     <Box p={4}>
