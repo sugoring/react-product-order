@@ -21,6 +21,34 @@ const PaymentPage = () => {
   const [receipt, setReceipt] = useState(false);
   const [receiptType, setReceiptType] = useState('personal');
   const [receiptNumber, setReceiptNumber] = useState('');
+  const [messageError, setMessageError] = useState('');
+  const [receiptError, setReceiptError] = useState('');
+
+  const handlePayment = () => {
+    // 카드 메시지 유효성 검사
+    if (!message) {
+      setMessageError('카드 메시지를 입력해주세요.');
+      return;
+    }
+    if (message.length > 100) {
+      setMessageError('카드 메시지는 100자를 초과할 수 없습니다.');
+      return;
+    }
+    setMessageError('');
+
+    // 현금영수증 번호 유효성 검사
+    if (receipt && !receiptNumber) {
+      setReceiptError('현금영수증 번호를 입력해주세요.');
+      return;
+    }
+    if (receipt && !/^\d*$/.test(receiptNumber)) {
+      setReceiptError('현금영수증 번호는 숫자만 입력 가능합니다.');
+      return;
+    }
+    setReceiptError('');
+
+    alert('주문이 완료되었습니다');
+  };
 
   if (isDetailLoading) {
     return (
@@ -61,6 +89,11 @@ const PaymentPage = () => {
             bg="#F7FAFC"
             borderRadius="md"
           />
+          {messageError && (
+            <Text color="red.500" mt={2}>
+              {messageError}
+            </Text>
+          )}
         </Box>
         <Box mb={4} borderWidth={1} p={4} borderRadius="md" bg="#fff" boxShadow="sm">
           <Text fontWeight="bold" mb={2} fontSize="lg">
@@ -96,6 +129,11 @@ const PaymentPage = () => {
                 placeholder="(-없이) 숫자만 입력하세요."
                 invalid={!/^\d*$/.test(receiptNumber)}
               />
+              {receiptError && (
+                <Text color="red.500" mt={2}>
+                  {receiptError}
+                </Text>
+              )}
             </Box>
           )}
           <Box mt={4} borderTop="1px solid #e2e8f0" pt={4}>
